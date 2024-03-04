@@ -323,6 +323,64 @@ namespace MediaTekDocuments.view
             txbLivresNumRecherche.Text = "";
             txbLivresTitreRecherche.Text = "";
         }
+        private string RemplirCbxNewGenreLivre()
+        {
+            List<Categorie> LesGenresLivres = controller.GetAllGenres();
+            foreach (Categorie genre in LesGenresLivres)
+            {
+                cbxNewGenreLivre.Items.Add(genre.Libelle);
+            }
+            if(cbxNewGenreLivre.Items.Count > 0)
+            {
+                cbxNewGenreLivre.SelectedIndex = 0;
+            }
+            return cbxNewGenreLivre.SelectedItem?.ToString();
+        }
+        /// <summary>
+        /// filtre sur le genre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbxNewGenreLivre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RemplirCbxNewGenreLivre();
+        }
+        private string RemplirCbxNewPublicLivre()
+        {
+            List<Categorie> LesPublicsLivres = controller.GetAllPublics();
+            foreach (Categorie lePublic in LesPublicsLivres)
+            {
+                cbxNewPublicLivre.Items.Add(lePublic.Libelle);
+            }
+            if (cbxNewPublicLivre.Items.Count > 0)
+            {
+                cbxNewPublicLivre.SelectedIndex = 0;
+            }
+            return cbxNewPublicLivre.SelectedItem?.ToString();
+        }
+        private void CbxNewPublicLivre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            RemplirCbxNewPublicLivre();
+        }
+        private string RemplirCbxNewRayonLivre()
+        {
+            List<Categorie> LesRayonsLivres = controller.GetAllRayons();
+            foreach (Categorie rayon in LesRayonsLivres)
+            {
+                cbxNewRayonLivre.Items.Add(rayon.Libelle);
+            }
+            if (cbxNewRayonLivre.Items.Count > 0)
+            {
+                cbxNewRayonLivre.SelectedIndex = 0;
+            }
+            return cbxNewRayonLivre.SelectedItem?.ToString();
+        }
+        private void cbxNewRayonLivre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RemplirCbxNewRayonLivre();
+          
+        }
 
         /// <summary>
         /// Tri sur les colonnes
@@ -360,6 +418,209 @@ namespace MediaTekDocuments.view
             }
             RemplirLivresListe(sortedList);
         }
+       
+        /// <summary>
+        /// vider les informations d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnVideInfoLivres_Click(object sender, EventArgs e)
+        {
+            VideLivresInfos();
+
+        }
+        /// <summary>
+        /// Id du genre qui correspond au genre de document
+        /// </summary>
+        /// <param name="genre">genre de document sélectionné</param>
+        /// <returns>id du genre selectionné</returns>
+        private string GetIdGenreDocument(string genre)
+        {
+            List<Categorie> lesGenresDocument = controller.GetAllGenres();
+            foreach (Categorie cat in lesGenresDocument)
+            {
+                if(cat.Libelle == genre)
+                {
+                    return cat.Id;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// id dupublic qui correspond au public de document
+        /// </summary>
+        /// <param name="lePublic">lePublic du document sélectionné</param>
+        /// <returns>id du public selectionné</returns>
+        private string GetIdPublicDocument(string lePublic)
+        {
+            List<Categorie> lesPublicsDocument = controller.GetAllPublics();
+            foreach (Categorie cat in lesPublicsDocument)
+            {
+                if (cat.Libelle == lePublic)
+                {
+                    return cat.Id;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// id du rayon qui correspond au rayon de document
+        /// </summary>
+        /// <param name="rayon">rayon du document sélectionné</param>
+        /// <returns>id du public selectionné</returns>
+        private string GetIdRayonDocument(string rayon)
+        {
+            List<Categorie> lesRayonsDocument = controller.GetAllRayons();
+            foreach (Categorie cat in lesRayonsDocument)
+            {
+                if (cat.Libelle == rayon)
+                {
+                    return cat.Id;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// l'ajout d'un livre dans la bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAjoutLivre_Click(object sender, EventArgs e)
+        {
+            if (!txbLivresNumero.Text.Equals(" ") && !txbLivresTitre.Text.Equals(" ") && !txbLivresCollection.Text.Equals(" ") && !cbxNewGenreLivre.Text.Equals(" ") && !cbxNewPublicLivre.Text.Equals(" ") && !cbxNewRayonLivre.Text.Equals(" "))
+            {
+                try
+                {
+                    string id = txbLivresNumero.Text;
+                    string titre = txbLivresTitre.Text;
+                    string image = txbLivresImage.Text;
+                    string isbn = txbLivresIsbn.Text;
+                    string auteur = txbLivresAuteur.Text;
+                    string collection = txbLivresCollection.Text;
+                    string idGenre = GetIdGenreDocument(cbxNewGenreLivre.Text);
+                    string idPublic = GetIdPublicDocument(cbxNewPublicLivre.Text);
+                    string idRayon = GetIdRayonDocument(cbxNewRayonLivre.Text);
+                    string genre = txbLivresGenre.Text;
+                    string lePublic = txbLivresPublic.Text;
+                    string rayon = txbLivresRayon.Text;
+                    Document document = new Document(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon);
+                    Livre livre = new Livre(id, titre, image, isbn, auteur, collection, idGenre, genre, idPublic, lePublic, idRayon, rayon);
+                    var idLivreExist = controller.GetAllDocuments(id);
+                    var idLivreNoExist = !idLivreExist.Any();
+                    
+                    if (idLivreNoExist)
+                    {
+                        if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdGenre, document.IdPublic, document.IdRayon) && controller.CreerLivre(livre.Id, livre.Isbn, livre.Auteur, livre.Collection))
+                        {
+                            lesLivres = controller.GetAllLivres();
+                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                            RemplirLivresListeComplete();
+                            MessageBox.Show(" Le livre " + titre + " est bien ajouté ");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(" Le numéro de document existe déjà! saisir un autre numéro! ", "ERREUR!!");
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show(" Une erreur s'est produite!!", "ERREUR!!");
+                }
+            }
+            else
+            {
+                MessageBox.Show(" Veuillez saisir tous les champs!", "INFORMATION!!");
+            }
+        }
+        /// <summary>
+        /// modification d'un livre dans la bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnModifLivre_Click(object sender, EventArgs e)
+        {
+            if (dgvLivresListe.SelectedRows.Count > 0)
+            {
+                Livre selectLivre = (Livre)dgvLivresListe.SelectedRows[0].DataBoundItem;
+                string id = selectLivre.Id;
+                string titre = txbLivresTitre.Text;
+                string image = txbLivresImage.Text;
+                string isbn = txbLivresIsbn.Text;
+                string auteur = txbLivresAuteur.Text;
+                string collection = txbLivresCollection.Text;
+                string idGenre = GetIdGenreDocument(cbxNewGenreLivre.Text);
+                string idPublic = GetIdPublicDocument(cbxNewPublicLivre.Text);
+                string idRayon = GetIdRayonDocument(cbxNewRayonLivre.Text);
+                if(!txbLivresNumero.Text.Equals("") && !txbLivresTitre.Text.Equals("") && !txbLivresCollection.Text.Equals("") && !cbxNewGenreLivre.Text.Equals("") && !cbxNewPublicLivre.Text.Equals("") && !cbxNewRayonLivre.Text.Equals(""))
+                {
+                    if(controller.EditDocument(id, titre, image, idGenre, idPublic, idRayon) && controller.EditLivre(id, isbn, auteur, collection))
+                    {
+                        lesLivres = controller.GetAllLivres();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                        RemplirLivresListeComplete();
+                        MessageBox.Show("Le livre " + titre + " est bien modifié!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la modification du livre", "ERREUR!!");
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez saisir tous les champs!!", "INFORMATION!!");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Veuillez selectioner une ligne!!", "INFORMATION!!");
+            }
+
+        }
+        /// <summary>
+        /// suppression d'un livre dans la bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSuppLivre_Click(object sender, EventArgs e)
+        {
+            Livre livre = (Livre)bdgLivresListe.Current;
+            if (MessageBox.Show("êtes vous sûr de vouloir supprimer ce" + livre.Titre + "?", "CONFIRMATION!", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                var exmpLivre = controller.GetExemplairesDocument(livre.Id);
+                var noExmpl = !exmpLivre.Any();
+                var commandeLivre = controller.GetCommandeDocument(livre.Id);
+                var noCommande = !commandeLivre.Any();
+                if (noCommande && noExmpl)
+                {
+                    if (controller.DeleteLivre(livre.Id))
+                    {
+                        lesLivres = controller.GetAllLivres();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                        RemplirLivresListeComplete();
+                        MessageBox.Show("Le livre " + livre.Titre + " est supprimer!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("erreur!!", "ERREUR!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Impossible de supprimer ce livre car il possède un ou plusieurs exemplaire(s), ou une ou plusieurs commande(s)", "ERREUR!!");
+                }
+            }
+        }
+
         #endregion
 
         #region Onglet Dvd
@@ -675,6 +936,159 @@ namespace MediaTekDocuments.view
             }
             RemplirDvdListe(sortedList);
         }
+        /// <summary>
+        /// vider les information dvd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnVideDVD_Click(object sender, EventArgs e)
+        {
+            VideDvdInfos();
+        }
+        /// <summary>
+        /// ajouter un dvd dans la bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAjoutDVD_Click(object sender, EventArgs e)
+        {
+            if (!txbDvdNumero.Text.Equals(" ") && !txbDvdTitre.Text.Equals(" ") && !txbDvdRealisateur.Text.Equals(" ") && !txbDvdSynopsis.Text.Equals("") && !cbxNewGenreDVD.Text.Equals(" ") && !cbxNewPublicDVD.Text.Equals(" ") && !cbxNewRayonDVD.Text.Equals(" "))
+            {
+                try
+                {
+                    string id = txbDvdNumero.Text;
+                    string titre = txbDvdTitre.Text;
+                    string image = txbDvdImage.Text;
+                    int duree = int.Parse(txbDvdDuree.Text);
+                    string realisateur = txbDvdDuree.Text;
+                    string synopsis = txbDvdSynopsis.Text;
+                    string idGenre = GetIdGenreDocument(cbxNewGenreDVD.Text);
+                    string idPublic = GetIdPublicDocument(cbxNewPublicDVD.Text);
+                    string idRayon = GetIdRayonDocument(cbxNewRayonDVD.Text);
+                    string genre = txbDvdGenre.Text;
+                    string lePublic = txbDvdPublic.Text;
+                    string rayon = txbDvdRayon.Text;
+                    Document document = new Document(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon);
+                    Dvd dvd = new Dvd(id, titre, image, duree, realisateur, synopsis, idGenre, genre, idPublic, lePublic, idRayon, rayon);
+                    var idDvdExist = controller.GetAllDocuments(id);
+                    var idDvdNoExist = !idDvdExist.Any();
+
+                    if (idDvdNoExist)
+                    {
+                        if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdGenre, document.IdPublic, document.IdRayon) && controller.CreerDvd(dvd.Id, dvd.Duree, dvd.Realisateur, dvd.Synopsis))
+                        {
+                            lesDvd = controller.GetAllDvd();
+                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
+                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
+                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+                            RemplirDvdListeComplete();
+                            MessageBox.Show(" Le dvd " + titre + " est bien ajouté ");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(" Le numéro de document existe déjà! saisir un autre numéro! ", "ERREUR!!");
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show(" Une erreur s'est produite!!", "ERREUR!!");
+                }
+            }
+            else
+            {
+                MessageBox.Show(" Veuillez saisir tous les champs!", "INFORMATION!!");
+            }
+        }
+        /// <summary>
+        /// modifier un dvd dans la bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnModifDVD_Click(object sender, EventArgs e)
+        {
+            if (dgvDvdListe.SelectedRows.Count > 0)
+            {
+                Dvd selectDvd = (Dvd)dgvDvdListe.SelectedRows[0].DataBoundItem;
+                string id = selectDvd.Id;
+                string titre = txbDvdTitre.Text;
+                string image = txbDvdImage.Text;
+                int duree = int.Parse(txbDvdDuree.Text);
+                string realisateur = txbDvdRealisateur.Text;
+                string synopsis = txbDvdSynopsis.Text;
+                string idGenre = GetIdGenreDocument(cbxNewGenreDVD.Text);
+                string idPublic = GetIdPublicDocument(cbxNewPublicDVD.Text);
+                string idRayon = GetIdRayonDocument(cbxNewRayonDVD.Text);
+                if (!txbDvdNumero.Text.Equals("") && !txbDvdTitre.Text.Equals("") && !txbDvdRealisateur.Text.Equals(" ") && !txbDvdSynopsis.Text.Equals("") && !cbxNewGenreDVD.Text.Equals("") && !cbxNewPublicDVD.Text.Equals("") && !cbxNewRayonDVD.Text.Equals(""))
+                {
+                    if (controller.EditDocument(id, titre, image, idGenre, idPublic, idRayon) && controller.EditDvd(id, duree, realisateur, synopsis))
+                    {
+                        lesDvd = controller.GetAllDvd();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+                        RemplirDvdListeComplete();
+                        MessageBox.Show("Le dvd " + titre + " est bien modifié!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la modification du dvd", "ERREUR!!");
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez saisir tous les champs!!", "INFORMATION!!");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Veuillez selectioner une ligne!!", "INFORMATION!!");
+            }
+
+        }
+        /// <summary>
+        /// supprimer un dvd dans la bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnSuppDVD_Click(object sender, EventArgs e)
+        {
+            Dvd dvd = (Dvd)bdgDvdListe.Current;
+            if (MessageBox.Show("êtes vous sûr de vouloir supprimer ce" + dvd.Titre + "?", "CONFIRMATION!", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                var exmpDvd = controller.GetExemplairesDocument(dvd.Id);
+                var noExmpl = !exmpDvd.Any();
+                var commandeDvd = controller.GetCommandeDocument(dvd.Id);
+                var noCommande = !commandeDvd.Any();
+                if (noCommande && noExmpl)
+                {
+                    if (controller.DeleteDvd(dvd.Id))
+                    {
+                        lesDvd = controller.GetAllDvd();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+                        RemplirDvdListeComplete();
+                        MessageBox.Show("Le dvd " + dvd.Titre + " est supprimer!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("erreur!!", "ERREUR!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Impossible de supprimer ce dvd car il possède un ou plusieurs exemplaire(s), ou une ou plusieurs commande(s)", "ERREUR!!");
+                }
+            }
+
+
+        }
         #endregion
 
         #region Onglet Revues
@@ -987,6 +1401,155 @@ namespace MediaTekDocuments.view
             }
             RemplirRevuesListe(sortedList);
         }
+        /// <summary>
+        /// vider revues informations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnVideRevue_Click(object sender, EventArgs e)
+        {
+            VideRevuesInfos();
+        }
+        /// <summary>
+        /// ajouter une revue 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAjoutRevue_Click(object sender, EventArgs e)
+        {
+            if (!txbRevuesNumero.Text.Equals(" ") && !txbRevuesTitre.Text.Equals(" ") && !txbRevuesPeriodicite.Text.Equals(" ") && !txbRevuesDateMiseADispo.Text.Equals("") && !cbxNewGenreRevue.Text.Equals(" ") && !cbxNewPublicRevue.Text.Equals(" ") && !cbxNewRayonRevue.Text.Equals(" "))
+            {
+                try
+                {
+                    string id = txbRevuesNumero.Text;
+                    string titre = txbRevuesTitre.Text;
+                    string image = txbRevuesImage.Text;
+                    string periodicite = txbRevuesPeriodicite.Text;
+                    int delaiMiseADispo = int.Parse(txbRevuesDateMiseADispo.Text);
+                    string idGenre = GetIdGenreDocument(cbxNewGenreRevue.Text);
+                    string idPublic = GetIdPublicDocument(cbxNewPublicRevue.Text);
+                    string idRayon = GetIdRayonDocument(cbxNewRayonRevue.Text);
+                    string genre = txbRevuesGenre.Text;
+                    string lePublic = txbRevuesPublic.Text;
+                    string rayon = txbRevuesRayon.Text;
+                    Document document = new Document(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon);
+                    Revue revue = new Revue(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon, periodicite, delaiMiseADispo);
+                    var idRevueExist = controller.GetAllDocuments(id);
+                    var idRevueNoExist = !idRevueExist.Any();
+
+                    if (idRevueNoExist)
+                    {
+                        if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdGenre, document.IdPublic, document.IdRayon) && controller.CreerRevue(revue.Id, revue.Periodicite, revue.DelaiMiseADispo))
+                        {
+                            lesRevues = controller.GetAllRevues();
+                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
+                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
+                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+                            RemplirRevuesListeComplete();
+                            MessageBox.Show(" La revue " + titre + " est bien ajouté ");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(" Le numéro de document existe déjà! saisir un autre numéro! ", "ERREUR!!");
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show(" Une erreur s'est produite!!", "ERREUR!!");
+                }
+            }
+            else
+            {
+                MessageBox.Show(" Veuillez saisir tous les champs!", "INFORMATION!!");
+            }
+
+        }
+        /// <summary>
+        /// modifier une revue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnModifRevue_Click(object sender, EventArgs e)
+        {
+            if (dgvRevuesListe.SelectedRows.Count > 0)
+            {
+                Revue selectRevue = (Revue)dgvRevuesListe.SelectedRows[0].DataBoundItem;
+                string id = selectRevue.Id;
+                string titre = txbRevuesTitre.Text;
+                string image = txbRevuesImage.Text;
+                string periodidcite = txbRevuesPeriodicite.Text;
+                int delaiMiseADispo = int.Parse(txbRevuesDateMiseADispo.Text);
+                string idGenre = GetIdGenreDocument(cbxNewGenreRevue.Text);
+                string idPublic = GetIdPublicDocument(cbxNewPublicRevue.Text);
+                string idRayon = GetIdRayonDocument(cbxNewRayonRevue.Text);
+                if (!txbRevuesNumero.Text.Equals("") && !txbRevuesTitre.Text.Equals("") && !txbRevuesPeriodicite.Text.Equals("") && !txbRevuesDateMiseADispo.Text.Equals("") && !cbxNewGenreRevue.Text.Equals("") && !cbxNewPublicRevue.Text.Equals("") && !cbxNewRayonRevue.Text.Equals(""))
+                {
+                    if (controller.EditDocument(id, titre, image, idGenre, idPublic, idRayon) && controller.EditRevue(id, periodidcite, delaiMiseADispo))
+                    {
+                        lesRevues = controller.GetAllRevues();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+                        RemplirRevuesListeComplete();
+                        MessageBox.Show("La revue " + titre + " est bien modifié!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la modification de la revue", "ERREUR!!");
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez saisir tous les champs!!", "INFORMATION!!");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Veuillez selectioner une ligne!!", "INFORMATION!!");
+            }
+        }
+        /// <summary>
+        /// supprimer une revue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnSuppRevue_Click(object sender, EventArgs e)
+        {
+            Revue revue = (Revue)bdgRevuesListe.Current;
+            if (MessageBox.Show("êtes vous sûr de vouloir supprimer cette" + revue.Titre + "?", "CONFIRMATION!", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                var exmpRevue = controller.GetExemplairesDocument(revue.Id);
+                var noExmpl = !exmpRevue.Any();
+                var commandeRevue = controller.GetCommandeDocument(revue.Id);
+                var noCommande = !commandeRevue.Any();
+                if (noCommande && noExmpl)
+                {
+                    if (controller.DeleteRevue(revue.Id))
+                    {
+                        lesRevues = controller.GetAllRevues();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+                        RemplirRevuesListeComplete();
+                        MessageBox.Show("La revue " + revue.Titre + " est supprimer!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("erreur!!", "ERREUR!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Impossible de supprimer cette revue car il possède un ou plusieurs exemplaire(s), ou une ou plusieurs commande(s)", "ERREUR!!");
+                }
+            }
+        }
         #endregion
 
         #region Onglet Paarutions
@@ -1238,6 +1801,21 @@ namespace MediaTekDocuments.view
                 pcbReceptionExemplaireRevueImage.Image = null;
             }
         }
+
+
+
+
+
+
+
+
         #endregion
+
+        private void txbRevuesImage_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
