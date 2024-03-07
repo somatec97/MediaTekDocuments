@@ -147,6 +147,16 @@ namespace MediaTekDocuments.dal
             List<Document> LesDocuments = TraitementRecup<Document>(GET, "document/" +jsonAllIdDocument);
             return LesDocuments;
         }
+        /// <summary>
+        /// Retourne touts les suivis a partir de la bdd
+        /// </summary>
+        /// <returns>liste d'objet suivi</returns>
+        public List<Suivi> GetAllSuivis()
+        {
+           
+            List<Suivi> LesSuivis = TraitementRecup<Suivi>(GET, "suivi" );
+            return LesSuivis;
+        }
 
 
         /// <summary>
@@ -363,7 +373,7 @@ namespace MediaTekDocuments.dal
         /// <param name="Duree"></param>
         /// <param name="Realisateur"></param>
         /// <param name="Synopsis"></param>
-        /// <returns></returns>
+        /// <returns>true si l'insertion a pu se faire</returns>
         public bool CreerDvd(string Id, int Duree, string Realisateur, string Synopsis)
         {
             String jsonCreerDvd = "{ \"id\" : \"" + Id + "\", \"duree\" : \"" + Duree + "\", \"realisateur\" : \"" + Realisateur + "\", \"synopsis\" : \"" + Synopsis + "\"}";
@@ -388,7 +398,7 @@ namespace MediaTekDocuments.dal
         /// <param name="Duree"></param>
         /// <param name="Realisateur"></param>
         /// <param name="Synopsis"></param>
-        /// <returns></returns>
+        /// <returns>true si l'insertion a pu se faire</returns>
         public bool EditDvd(string Id, int Duree, string Realisateur, string Synopsis)
         {
             String jsonEditDvd = "{ \"id\" : \"" + Id + "\", \"duree\" : \"" + Duree + "\", \"realisateur\" : \"" + Realisateur + "\", \"synopsis\" : \"" + Synopsis + "\"}";
@@ -410,7 +420,7 @@ namespace MediaTekDocuments.dal
         /// supprimer un dvd en bdd
         /// </summary>
         /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <returns>true si l'insertion a pu se faire</returns>
         public bool DeleteDvd(string Id)
         {
             string jsonDeleteDvd = "{\"id\" : \"" + Id + "\"}";
@@ -434,7 +444,7 @@ namespace MediaTekDocuments.dal
         /// <param name="Id"></param>
         /// <param name="periodicite"></param>
         /// <param name="delaiMiseADispo"></param>
-        /// <returns></returns>
+        /// <returns>true si l'insertion a pu se faire</returns>
         public bool CreerRevue(string Id, string periodicite, int delaiMiseADispo)
         {
             String jsonCreerRevue = "{ \"id\" : \"" + Id + "\", \"periodicite\" : \"" + periodicite + "\", \"delaiMiseADispo\" : \"" + delaiMiseADispo +  "\"}";
@@ -458,7 +468,7 @@ namespace MediaTekDocuments.dal
         /// <param name="Id"></param>
         /// <param name="periodicite"></param>
         /// <param name="delaiMiseADispo"></param>
-        /// <returns></returns>
+        /// <returns>true si l'insertion a pu se faire</returns>
         public bool EditRevue(string Id, string periodicite, int delaiMiseADispo)
         {
             String jsonEditRevue = "{ \"id\" : \"" + Id + "\", \"periodicite\" : \"" + periodicite + "\", \"delaiMiseADispo\" : \"" + delaiMiseADispo +  "\"}";
@@ -480,7 +490,7 @@ namespace MediaTekDocuments.dal
         /// supprimer une revue en bdd
         /// </summary>
         /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <returns>true si l'insertion a pu se faire</returns>
         public bool DeleteRevue(string Id)
         {
             string jsonDeleteRevue = "{\"id\" : \"" + Id + "\"}";
@@ -489,6 +499,103 @@ namespace MediaTekDocuments.dal
             {
                 //récupération doit d'une liste vide (requête ok) soit de null (erreur)
                 List<Revue> liste = TraitementRecup<Revue>(DELETE, "revue/" + Id + "/" + jsonDeleteRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+
+        }
+        /// <summary>
+        /// ecriture d'une commande en base de données
+        /// </summary>
+        /// <param name="commande"></param>
+        /// <returns>true si l'insertion a pu se faire</returns>
+        public bool CreerCommande(Commande commande)
+        {
+            String jsonCreerCommande = JsonConvert.SerializeObject(commande, new CustomDateTimeConverter());
+            Console.WriteLine("jsonCreerCommande" + jsonCreerCommande);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Commande> liste = TraitementRecup<Commande>(POST, "commande/" + jsonCreerCommande);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+        /// <summary>
+        /// ecriture d'une commande d'un documenten base de données
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="NbExemplaire"></param>
+        /// <param name="IdLivreDvd"></param>
+        /// <param name="IdSuivi"></param>
+        /// <returns>true si l'insertion a pu se faire</returns>
+        public bool CreerCommandeDocument(string Id, int NbExemplaire, string IdLivreDvd, string IdSuivi )
+        {
+
+            String jsonCreerCommandeDocument = "{ \"id\" : \"" + Id + "\", \"nbExemplaire\" : \"" + NbExemplaire + "\", \"idLivreDvd\" : \"" + IdLivreDvd + "\", \"idSuivi\" : \"" + IdSuivi +  "\"}";
+            Console.WriteLine("jsonCreerCommandeDocument" + jsonCreerCommandeDocument);
+
+            try
+            {
+                //récupération doit d'une liste vide (requête ok) soit de null (erreur)
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(POST, "commandeDocument/" + jsonCreerCommandeDocument);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            return false;
+        }
+        /// <summary>
+        /// modifier l'étape de suivi d'une commande de document en bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="NbExemplaire"></param>
+        /// <param name="IdLivreDvd"></param>
+        /// <param name="IdSuivi"></param>
+        /// <returns>true si la modification a pu se faire</returns>
+        public bool EditSuiviCommandeDocument(string Id, int NbExemplaire, string IdLivreDvd, string IdSuivi)
+        {
+            String jsonEditSuiviCommandeDocument = "{ \"id\" : \"" + Id + "\", \"nbExemplaire\" : \"" + NbExemplaire + "\", \"idLivreDvd\" : \"" + IdLivreDvd + "\", \"idSuivi\" : \"" + IdSuivi + "\"}";
+            Console.WriteLine("jsonEditSuiviCommandeDocument" + jsonEditSuiviCommandeDocument);
+
+            try
+            {
+                //récupération doit d'une liste vide (requête ok) soit de null (erreur)
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(PUT, "commandeDocument/" + Id + "/" + jsonEditSuiviCommandeDocument);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            return false;
+
+        }
+        /// <summary>
+        /// supprimer une commande de document en bdd
+        /// </summary>
+        /// <param name="commandeDocument"></param>
+        /// <returns></returns>
+        public bool DeleteCommandeDocument(CommandeDocument commandeDocument)
+        {
+            string jsonDeleteCommandeDocument = "{\"id\" : \"" + commandeDocument.Id + "\"}";
+            Console.WriteLine("jsonDeleteCommandeDocument" + jsonDeleteCommandeDocument);
+            try
+            {
+                //récupération doit d'une liste vide (requête ok) soit de null (erreur)
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(DELETE, "commandeDocument/" + jsonDeleteCommandeDocument);
                 return (liste != null);
             }
             catch (Exception ex)

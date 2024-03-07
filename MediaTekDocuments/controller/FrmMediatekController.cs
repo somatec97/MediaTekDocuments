@@ -85,6 +85,14 @@ namespace MediaTekDocuments.controller
             return access.GetAllDocuments(id);
 
         }
+        /// <summary>
+        /// getter sur les suivis
+        /// </summary>
+        /// <returns>liste d'objet suivi</returns>
+        public List<Suivi> GetAllSuivis()
+        {
+            return access.GetAllSuivis();
+        }
 
 
         /// <summary>
@@ -107,10 +115,10 @@ namespace MediaTekDocuments.controller
             return access.CreerExemplaire(exemplaire);
         }
         /// <summary>
-        /// creer un exemplaire d'un document dans la bdd
+        /// recuperer un exemplaire d'un document dans la bdd
         /// </summary>
         /// <param name="idDocuement"></param>
-        /// <returns></returns>
+        /// <returns>Liste d'objets Exemplaire d'un document</returns>
         public List<Exemplaire> GetExemplairesDocument(string idDocuement)
         {
             return access.GetExemplairesDocument(idDocuement);
@@ -119,7 +127,7 @@ namespace MediaTekDocuments.controller
         /// creer une commande d'un document dans la bdd
         /// </summary>
         /// <param name="idDocuement"></param>
-        /// <returns></returns>
+        /// <returns>Liste d'objets commande d'un document</returns>
         public List<CommandeDocument> GetCommandeDocument(string idDocuement)
         {
             return access.GetCommandeDocument(idDocuement);
@@ -192,7 +200,7 @@ namespace MediaTekDocuments.controller
         /// supprimer un livre dans la bdd
         /// </summary>
         /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <returns>true si la suppression a pu se faire</returns>
         public bool DeleteLivre(string Id)
         {
             return access.DeleteLivre(Id);
@@ -205,7 +213,7 @@ namespace MediaTekDocuments.controller
         /// <param name="Duree"></param>
         /// <param name="Realisateur"></param>
         /// <param name="Synopsis"></param>
-        /// <returns></returns>
+        /// <returns>true si la creation a pu se faire</returns>
         public bool CreerDvd(string Id, int Duree, string Realisateur, string Synopsis)
         {
             return access.CreerDvd(Id, Duree, Realisateur, Synopsis);
@@ -217,7 +225,7 @@ namespace MediaTekDocuments.controller
         /// <param name="Duree"></param>
         /// <param name="Realisateur"></param>
         /// <param name="Synopsis"></param>
-        /// <returns></returns>
+        /// <returns>true si la modification a pu se faire</returns>
         public bool EditDvd(string Id, int Duree, string Realisateur, string Synopsis)
         {
             return access.EditDvd(Id, Duree, Realisateur, Synopsis);
@@ -226,7 +234,7 @@ namespace MediaTekDocuments.controller
         /// supprimer un dvd dans la bdd
         /// </summary>
         /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <returns>true si la suppression a pu se faire</returns>
         public bool DeleteDvd(string Id)
         {
             return access.DeleteDvd(Id);
@@ -238,7 +246,7 @@ namespace MediaTekDocuments.controller
         /// <param name="Id"></param>
         /// <param name="periodicite"></param>
         /// <param name="delaiMiseADispo"></param>
-        /// <returns></returns>
+        /// <returns>true si la creation a pu se faire</returns>
         public bool CreerRevue(string Id, string periodicite, int delaiMiseADispo)
         {
             return access.CreerRevue(Id, periodicite, delaiMiseADispo);
@@ -249,7 +257,7 @@ namespace MediaTekDocuments.controller
         /// <param name="Id"></param>
         /// <param name="periodicite"></param>
         /// <param name="delaiMiseADispo"></param>
-        /// <returns></returns>
+        /// <returns>true si la modification a pu se faire</returns>
         public bool EditRevue(string Id, string periodicite, int delaiMiseADispo)
         {
             return access.EditRevue(Id, periodicite, delaiMiseADispo);
@@ -258,11 +266,53 @@ namespace MediaTekDocuments.controller
         /// supprimer une revue dans la bdd
         /// </summary>
         /// <param name="Id"></param>
-        /// <returns></returns>
+        /// <returns>true si la suppression a pu se faire</returns>
         public bool DeleteRevue(string Id)
         {
             return access.DeleteRevue(Id);
 
+        }
+        /// <summary>
+        /// ajouter une commande dans la bdd
+        /// </summary>
+        /// <param name="commande"></param>
+        /// <returns>true si la creation a pu se faire</returns>
+        public bool CreerCommande(Commande commande)
+        {
+            return access.CreerCommande(commande);
+        }
+        /// <summary>
+        /// ajouter une commande d'un document dans la bdd
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="nbExemplaire"></param>
+        /// <param name="idLivreDvd"></param>
+        /// <param name="idSuivi"></param>
+        /// <returns>true si la creation a pu se faire</returns>
+        public bool CreerCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
+        {
+            return access.CreerCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
+        }
+        /// <summary>
+        /// modifier l'étape de suivi de la commande d'un document dans la bdd
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="nbExemplaire"></param>
+        /// <param name="idLivreDvd"></param>
+        /// <param name="idSuivi"></param>
+        /// <returns>true si la modification a pu se faire</returns>
+        public bool EditSuiviCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
+        {
+            return access.EditSuiviCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
+        }
+        /// <summary>
+        /// supprimer une commande du document dans la bdd
+        /// </summary>
+        /// <param name="commandeDocument"></param>
+        /// <returns>true si la suppression a pu se faire</returns>
+        public bool DeleteCommandeDocument(CommandeDocument commandeDocument)
+        {
+            return access.DeleteCommandeDocument(commandeDocument);
         }
 
 
