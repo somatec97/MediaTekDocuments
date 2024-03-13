@@ -226,7 +226,7 @@ namespace MediaTekDocuments.view
             this.btnRetourCmdLivre = new System.Windows.Forms.Button();
             this.btnModifSuiviCmdLivre = new System.Windows.Forms.Button();
             this.labelEtapeSuivi = new System.Windows.Forms.Label();
-            this.label78 = new System.Windows.Forms.Label();
+            this.labelEtapSuiviCmdLivre = new System.Windows.Forms.Label();
             this.btnAjoutNewCmdLivre = new System.Windows.Forms.Button();
             this.btnSuppCmdLivre = new System.Windows.Forms.Button();
             this.dgvCmdLivre = new System.Windows.Forms.DataGridView();
@@ -261,7 +261,7 @@ namespace MediaTekDocuments.view
             this.cbxEtapSuiviCmdDvd = new System.Windows.Forms.ComboBox();
             this.btnRetourCmdDvd = new System.Windows.Forms.Button();
             this.btnModifEtapSuiviDvd = new System.Windows.Forms.Button();
-            this.label97 = new System.Windows.Forms.Label();
+            this.labelEtapeSuiviCmdDvd = new System.Windows.Forms.Label();
             this.label98 = new System.Windows.Forms.Label();
             this.btnAjoutNewCmdDvd = new System.Windows.Forms.Button();
             this.btnSuppCmdDvd = new System.Windows.Forms.Button();
@@ -2477,7 +2477,7 @@ namespace MediaTekDocuments.view
             this.grpBoxInfosCommandeLivre.Controls.Add(this.btnRetourCmdLivre);
             this.grpBoxInfosCommandeLivre.Controls.Add(this.btnModifSuiviCmdLivre);
             this.grpBoxInfosCommandeLivre.Controls.Add(this.labelEtapeSuivi);
-            this.grpBoxInfosCommandeLivre.Controls.Add(this.label78);
+            this.grpBoxInfosCommandeLivre.Controls.Add(this.labelEtapSuiviCmdLivre);
             this.grpBoxInfosCommandeLivre.Controls.Add(this.btnAjoutNewCmdLivre);
             this.grpBoxInfosCommandeLivre.Controls.Add(this.btnSuppCmdLivre);
             this.grpBoxInfosCommandeLivre.Location = new System.Drawing.Point(8, 620);
@@ -2570,6 +2570,7 @@ namespace MediaTekDocuments.view
             this.btnRetourCmdLivre.TabIndex = 11;
             this.btnRetourCmdLivre.Text = "Retour";
             this.btnRetourCmdLivre.UseVisualStyleBackColor = true;
+            this.btnRetourCmdLivre.Click += new System.EventHandler(this.btnRetourCmdLivre_Click);
             // 
             // btnModifSuiviCmdLivre
             // 
@@ -2591,14 +2592,15 @@ namespace MediaTekDocuments.view
             this.labelEtapeSuivi.Text = " ";
             this.labelEtapeSuivi.TextChanged += new System.EventHandler(this.labelEtapeSuivi_TextChanged);
             // 
-            // label78
+            // labelEtapSuiviCmdLivre
             // 
-            this.label78.AutoSize = true;
-            this.label78.Location = new System.Drawing.Point(6, 243);
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(241, 20);
-            this.label78.TabIndex = 8;
-            this.label78.Text = "Etape de suivi de la commande  :";
+            this.labelEtapSuiviCmdLivre.AutoSize = true;
+            this.labelEtapSuiviCmdLivre.Location = new System.Drawing.Point(6, 243);
+            this.labelEtapSuiviCmdLivre.Name = "labelEtapSuiviCmdLivre";
+            this.labelEtapSuiviCmdLivre.Size = new System.Drawing.Size(241, 20);
+            this.labelEtapSuiviCmdLivre.TabIndex = 8;
+            this.labelEtapSuiviCmdLivre.Text = "Etape de suivi de la commande  :";
+            this.labelEtapSuiviCmdLivre.Click += new System.EventHandler(this.labelEtapSuiviCmdLivre_Click);
             // 
             // btnAjoutNewCmdLivre
             // 
@@ -2824,6 +2826,7 @@ namespace MediaTekDocuments.view
             this.tabCommandeDvd.TabIndex = 6;
             this.tabCommandeDvd.Text = "Commandes de dvd";
             this.tabCommandeDvd.UseVisualStyleBackColor = true;
+            this.tabCommandeDvd.Click += new System.EventHandler(this.tabCommandeDvd_Click);
             // 
             // grpBoxInfoNewCmdDvd
             // 
@@ -2838,7 +2841,7 @@ namespace MediaTekDocuments.view
             this.grpBoxInfoNewCmdDvd.Controls.Add(this.cbxEtapSuiviCmdDvd);
             this.grpBoxInfoNewCmdDvd.Controls.Add(this.btnRetourCmdDvd);
             this.grpBoxInfoNewCmdDvd.Controls.Add(this.btnModifEtapSuiviDvd);
-            this.grpBoxInfoNewCmdDvd.Controls.Add(this.label97);
+            this.grpBoxInfoNewCmdDvd.Controls.Add(this.labelEtapeSuiviCmdDvd);
             this.grpBoxInfoNewCmdDvd.Controls.Add(this.label98);
             this.grpBoxInfoNewCmdDvd.Controls.Add(this.btnAjoutNewCmdDvd);
             this.grpBoxInfoNewCmdDvd.Controls.Add(this.btnSuppCmdDvd);
@@ -2921,6 +2924,7 @@ namespace MediaTekDocuments.view
             this.cbxEtapSuiviCmdDvd.Name = "cbxEtapSuiviCmdDvd";
             this.cbxEtapSuiviCmdDvd.Size = new System.Drawing.Size(394, 28);
             this.cbxEtapSuiviCmdDvd.TabIndex = 12;
+            this.cbxEtapSuiviCmdDvd.SelectedIndexChanged += new System.EventHandler(this.cbxEtapSuiviCmdDvd_SelectedIndexChanged);
             // 
             // btnRetourCmdDvd
             // 
@@ -2930,6 +2934,7 @@ namespace MediaTekDocuments.view
             this.btnRetourCmdDvd.TabIndex = 11;
             this.btnRetourCmdDvd.Text = "Retour";
             this.btnRetourCmdDvd.UseVisualStyleBackColor = true;
+            this.btnRetourCmdDvd.Click += new System.EventHandler(this.btnRetourCmdDvd_Click);
             // 
             // btnModifEtapSuiviDvd
             // 
@@ -2939,15 +2944,16 @@ namespace MediaTekDocuments.view
             this.btnModifEtapSuiviDvd.TabIndex = 10;
             this.btnModifEtapSuiviDvd.Text = "Modifier l\'étape de suivi ";
             this.btnModifEtapSuiviDvd.UseVisualStyleBackColor = true;
+            this.btnModifEtapSuiviDvd.Click += new System.EventHandler(this.btnModifEtapSuiviDvd_Click);
             // 
-            // label97
+            // labelEtapeSuiviCmdDvd
             // 
-            this.label97.AutoSize = true;
-            this.label97.Location = new System.Drawing.Point(326, 243);
-            this.label97.Name = "label97";
-            this.label97.Size = new System.Drawing.Size(78, 20);
-            this.label97.TabIndex = 9;
-            this.label97.Text = " en cours ";
+            this.labelEtapeSuiviCmdDvd.AutoSize = true;
+            this.labelEtapeSuiviCmdDvd.Location = new System.Drawing.Point(326, 243);
+            this.labelEtapeSuiviCmdDvd.Name = "labelEtapeSuiviCmdDvd";
+            this.labelEtapeSuiviCmdDvd.Size = new System.Drawing.Size(13, 20);
+            this.labelEtapeSuiviCmdDvd.TabIndex = 9;
+            this.labelEtapeSuiviCmdDvd.Text = " ";
             // 
             // label98
             // 
@@ -2966,6 +2972,7 @@ namespace MediaTekDocuments.view
             this.btnAjoutNewCmdDvd.TabIndex = 7;
             this.btnAjoutNewCmdDvd.Text = "Ajouter une nouvelle commande ";
             this.btnAjoutNewCmdDvd.UseVisualStyleBackColor = true;
+            this.btnAjoutNewCmdDvd.Click += new System.EventHandler(this.btnAjoutNewCmdDvd_Click);
             // 
             // btnSuppCmdDvd
             // 
@@ -2975,6 +2982,7 @@ namespace MediaTekDocuments.view
             this.btnSuppCmdDvd.TabIndex = 6;
             this.btnSuppCmdDvd.Text = "Supprimer la commande";
             this.btnSuppCmdDvd.UseVisualStyleBackColor = true;
+            this.btnSuppCmdDvd.Click += new System.EventHandler(this.btnSuppCmdDvd_Click);
             // 
             // dgvCmdDvd
             // 
@@ -3170,6 +3178,7 @@ namespace MediaTekDocuments.view
             this.btnRechercheCmdDvd.TabIndex = 7;
             this.btnRechercheCmdDvd.Text = "Rechercher";
             this.btnRechercheCmdDvd.UseVisualStyleBackColor = true;
+            this.btnRechercheCmdDvd.Click += new System.EventHandler(this.btnRechercheCmdDvd_Click);
             // 
             // txbNbDocRechercheCmdDvd
             // 
@@ -3472,7 +3481,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Button btnRetourCmdLivre;
         private System.Windows.Forms.Button btnModifSuiviCmdLivre;
         private System.Windows.Forms.Label labelEtapeSuivi;
-        private System.Windows.Forms.Label label78;
+        private System.Windows.Forms.Label labelEtapSuiviCmdLivre;
         private System.Windows.Forms.Label label83;
         private System.Windows.Forms.Label label82;
         private System.Windows.Forms.Label label81;
@@ -3493,7 +3502,7 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.ComboBox cbxEtapSuiviCmdDvd;
         private System.Windows.Forms.Button btnRetourCmdDvd;
         private System.Windows.Forms.Button btnModifEtapSuiviDvd;
-        private System.Windows.Forms.Label label97;
+        private System.Windows.Forms.Label labelEtapeSuiviCmdDvd;
         private System.Windows.Forms.Label label98;
         private System.Windows.Forms.Button btnAjoutNewCmdDvd;
         private System.Windows.Forms.Button btnSuppCmdDvd;
