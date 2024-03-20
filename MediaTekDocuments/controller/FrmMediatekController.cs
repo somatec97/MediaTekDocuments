@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using MediaTekDocuments.model;
 using MediaTekDocuments.dal;
+using System;
 
 namespace MediaTekDocuments.controller
 {
     /// <summary>
     /// Contrôleur lié à FrmMediatek
     /// </summary>
-    class FrmMediatekController
+     public class FrmMediatekController
     {
         /// <summary>
         /// Objet d'accès aux données
@@ -104,6 +105,15 @@ namespace MediaTekDocuments.controller
         {
             return access.GetExemplairesRevue(idDocuement);
         }
+        /// <summary>
+        /// récupère les abonnements d'une revue
+        /// </summary>
+        /// <param name="idDocuement"></param>
+        /// <returns></returns>
+        public List<Abonnement> GetAbonnementRevue(string idDocuement)
+        {
+            return access.GetAbonnementRevue(idDocuement);
+        }
 
         /// <summary>
         /// Crée un exemplaire d'une revue dans la bdd
@@ -131,6 +141,14 @@ namespace MediaTekDocuments.controller
         public List<CommandeDocument> GetCommandeDocument(string idDocuement)
         {
             return access.GetCommandeDocument(idDocuement);
+        }
+        /// <summary>
+        /// recupère les abonnements qui expirent dans 30 jours
+        /// </summary>
+        /// <returns></returns>
+        public List<Abonnement> GetAbonnementsExpires()
+        {
+            return access.GetAbonnementExpire();
         }
         /// <summary>
         /// creer un document dans la bdd
@@ -313,6 +331,26 @@ namespace MediaTekDocuments.controller
         public bool DeleteCommandeDocument(CommandeDocument commandeDocument)
         {
             return access.DeleteCommandeDocument(commandeDocument);
+        }
+        /// <summary>
+        /// creer un abonnement d'une revue dans la bdd
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dateFinAbonnement"></param>
+        /// <param name="idRevue"></param>
+        /// <returns>true si l'insertion a pu se faire</returns>
+        public bool CreerAbonnementRevue(string id, DateTime dateFinAbonnement, string idRevue)
+        {
+            return access.CreerAbonnementRevue(id, dateFinAbonnement, idRevue);
+        }
+        /// <summary>
+        /// Supprimer l'abonnement d'une revue dans la bdd
+        /// </summary>
+        /// <param name="abonnement"></param>
+        /// <returns>true si la suppression a pu se faire</returns>
+        public bool DeleteAbonnementRevue(Abonnement abonnement)
+        {
+            return access.DeleteAbonnementRevue(abonnement);
         }
 
 

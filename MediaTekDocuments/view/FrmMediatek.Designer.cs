@@ -288,6 +288,38 @@ namespace MediaTekDocuments.view
             this.txbNbDocRechercheCmdDvd = new System.Windows.Forms.TextBox();
             this.label84 = new System.Windows.Forms.Label();
             this.tabCommandeRevue = new System.Windows.Forms.TabPage();
+            this.groupBoxInfosNewCmdRevue = new System.Windows.Forms.GroupBox();
+            this.dateTimePickerFinDAbonnementRevue = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerCmdRevue = new System.Windows.Forms.DateTimePicker();
+            this.label105 = new System.Windows.Forms.Label();
+            this.label106 = new System.Windows.Forms.Label();
+            this.label107 = new System.Windows.Forms.Label();
+            this.label108 = new System.Windows.Forms.Label();
+            this.btnAjoutCmdRevue = new System.Windows.Forms.Button();
+            this.txbMontantCmdRevue = new System.Windows.Forms.TextBox();
+            this.txbNumCmdRevue = new System.Windows.Forms.TextBox();
+            this.label109 = new System.Windows.Forms.Label();
+            this.btnSuppCmdRevue = new System.Windows.Forms.Button();
+            this.dataGridViewCmdRevue = new System.Windows.Forms.DataGridView();
+            this.groupBoxInfosCmdRevue = new System.Windows.Forms.GroupBox();
+            this.txbTitreCmdRevue = new System.Windows.Forms.TextBox();
+            this.txbChemImageCmdRevue = new System.Windows.Forms.TextBox();
+            this.txbDelaiMiseADispoCmdRevue = new System.Windows.Forms.TextBox();
+            this.label79 = new System.Windows.Forms.Label();
+            this.label99 = new System.Windows.Forms.Label();
+            this.pictureBoxImgCmdRevue = new System.Windows.Forms.PictureBox();
+            this.txbRayonCmdRevue = new System.Windows.Forms.TextBox();
+            this.txbPublicCmdRevue = new System.Windows.Forms.TextBox();
+            this.txbGenreCmdRevue = new System.Windows.Forms.TextBox();
+            this.txbPeriodiciteCmdRevue = new System.Windows.Forms.TextBox();
+            this.label100 = new System.Windows.Forms.Label();
+            this.label101 = new System.Windows.Forms.Label();
+            this.label102 = new System.Windows.Forms.Label();
+            this.label103 = new System.Windows.Forms.Label();
+            this.label104 = new System.Windows.Forms.Label();
+            this.btnRechercheNumDocCmdRevue = new System.Windows.Forms.Button();
+            this.textBoxNumDocCmdRevue = new System.Windows.Forms.TextBox();
+            this.label78 = new System.Windows.Forms.Label();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
@@ -322,6 +354,11 @@ namespace MediaTekDocuments.view
             ((System.ComponentModel.ISupportInitialize)(this.dgvCmdDvd)).BeginInit();
             this.grpboxInfosDvdCmd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictBoxImageCmdDvd)).BeginInit();
+            this.tabCommandeRevue.SuspendLayout();
+            this.groupBoxInfosNewCmdRevue.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdRevue)).BeginInit();
+            this.groupBoxInfosCmdRevue.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImgCmdRevue)).BeginInit();
             this.SuspendLayout();
             // 
             // tabOngletsApplication
@@ -2924,7 +2961,6 @@ namespace MediaTekDocuments.view
             this.cbxEtapSuiviCmdDvd.Name = "cbxEtapSuiviCmdDvd";
             this.cbxEtapSuiviCmdDvd.Size = new System.Drawing.Size(394, 28);
             this.cbxEtapSuiviCmdDvd.TabIndex = 12;
-            this.cbxEtapSuiviCmdDvd.SelectedIndexChanged += new System.EventHandler(this.cbxEtapSuiviCmdDvd_SelectedIndexChanged);
             // 
             // btnRetourCmdDvd
             // 
@@ -3198,12 +3234,325 @@ namespace MediaTekDocuments.view
             // 
             // tabCommandeRevue
             // 
+            this.tabCommandeRevue.Controls.Add(this.groupBoxInfosNewCmdRevue);
+            this.tabCommandeRevue.Controls.Add(this.dataGridViewCmdRevue);
+            this.tabCommandeRevue.Controls.Add(this.groupBoxInfosCmdRevue);
+            this.tabCommandeRevue.Controls.Add(this.btnRechercheNumDocCmdRevue);
+            this.tabCommandeRevue.Controls.Add(this.textBoxNumDocCmdRevue);
+            this.tabCommandeRevue.Controls.Add(this.label78);
             this.tabCommandeRevue.Location = new System.Drawing.Point(4, 22);
             this.tabCommandeRevue.Name = "tabCommandeRevue";
             this.tabCommandeRevue.Size = new System.Drawing.Size(1316, 988);
             this.tabCommandeRevue.TabIndex = 7;
             this.tabCommandeRevue.Text = "Commandes de revues";
             this.tabCommandeRevue.UseVisualStyleBackColor = true;
+            this.tabCommandeRevue.Click += new System.EventHandler(this.tabCommandeRevue_Click);
+            // 
+            // groupBoxInfosNewCmdRevue
+            // 
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.dateTimePickerFinDAbonnementRevue);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.dateTimePickerCmdRevue);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.label105);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.label106);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.label107);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.label108);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.btnAjoutCmdRevue);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.txbMontantCmdRevue);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.txbNumCmdRevue);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.label109);
+            this.groupBoxInfosNewCmdRevue.Controls.Add(this.btnSuppCmdRevue);
+            this.groupBoxInfosNewCmdRevue.Location = new System.Drawing.Point(15, 639);
+            this.groupBoxInfosNewCmdRevue.Name = "groupBoxInfosNewCmdRevue";
+            this.groupBoxInfosNewCmdRevue.Size = new System.Drawing.Size(1287, 246);
+            this.groupBoxInfosNewCmdRevue.TabIndex = 11;
+            this.groupBoxInfosNewCmdRevue.TabStop = false;
+            this.groupBoxInfosNewCmdRevue.Text = "Informations d\'une commande :";
+            // 
+            // dateTimePickerFinDAbonnementRevue
+            // 
+            this.dateTimePickerFinDAbonnementRevue.Location = new System.Drawing.Point(944, 107);
+            this.dateTimePickerFinDAbonnementRevue.Name = "dateTimePickerFinDAbonnementRevue";
+            this.dateTimePickerFinDAbonnementRevue.Size = new System.Drawing.Size(321, 26);
+            this.dateTimePickerFinDAbonnementRevue.TabIndex = 24;
+            // 
+            // dateTimePickerCmdRevue
+            // 
+            this.dateTimePickerCmdRevue.Location = new System.Drawing.Point(944, 47);
+            this.dateTimePickerCmdRevue.Name = "dateTimePickerCmdRevue";
+            this.dateTimePickerCmdRevue.Size = new System.Drawing.Size(321, 26);
+            this.dateTimePickerCmdRevue.TabIndex = 21;
+            // 
+            // label105
+            // 
+            this.label105.AutoSize = true;
+            this.label105.Location = new System.Drawing.Point(721, 110);
+            this.label105.Name = "label105";
+            this.label105.Size = new System.Drawing.Size(217, 20);
+            this.label105.TabIndex = 20;
+            this.label105.Text = "Date de fin de l\'abonnement :";
+            // 
+            // label106
+            // 
+            this.label106.AutoSize = true;
+            this.label106.Location = new System.Drawing.Point(721, 52);
+            this.label106.Name = "label106";
+            this.label106.Size = new System.Drawing.Size(173, 20);
+            this.label106.TabIndex = 19;
+            this.label106.Text = "Date de la commande :";
+            // 
+            // label107
+            // 
+            this.label107.AutoSize = true;
+            this.label107.Location = new System.Drawing.Point(6, 104);
+            this.label107.Name = "label107";
+            this.label107.Size = new System.Drawing.Size(76, 20);
+            this.label107.TabIndex = 18;
+            this.label107.Text = "Montant :";
+            // 
+            // label108
+            // 
+            this.label108.AutoSize = true;
+            this.label108.Location = new System.Drawing.Point(6, 58);
+            this.label108.Name = "label108";
+            this.label108.Size = new System.Drawing.Size(194, 20);
+            this.label108.TabIndex = 17;
+            this.label108.Text = "Numéro de la commande :";
+            // 
+            // btnAjoutCmdRevue
+            // 
+            this.btnAjoutCmdRevue.Location = new System.Drawing.Point(10, 180);
+            this.btnAjoutCmdRevue.Name = "btnAjoutCmdRevue";
+            this.btnAjoutCmdRevue.Size = new System.Drawing.Size(540, 50);
+            this.btnAjoutCmdRevue.TabIndex = 7;
+            this.btnAjoutCmdRevue.Text = "Ajouter une nouvelle commande ";
+            this.btnAjoutCmdRevue.UseVisualStyleBackColor = true;
+            this.btnAjoutCmdRevue.Click += new System.EventHandler(this.btnAjoutCmdRevue_Click);
+            // 
+            // txbMontantCmdRevue
+            // 
+            this.txbMontantCmdRevue.Location = new System.Drawing.Point(208, 104);
+            this.txbMontantCmdRevue.Name = "txbMontantCmdRevue";
+            this.txbMontantCmdRevue.Size = new System.Drawing.Size(342, 26);
+            this.txbMontantCmdRevue.TabIndex = 14;
+            // 
+            // txbNumCmdRevue
+            // 
+            this.txbNumCmdRevue.Location = new System.Drawing.Point(208, 58);
+            this.txbNumCmdRevue.Name = "txbNumCmdRevue";
+            this.txbNumCmdRevue.Size = new System.Drawing.Size(342, 26);
+            this.txbNumCmdRevue.TabIndex = 13;
+            // 
+            // label109
+            // 
+            this.label109.AutoSize = true;
+            this.label109.Location = new System.Drawing.Point(326, 243);
+            this.label109.Name = "label109";
+            this.label109.Size = new System.Drawing.Size(13, 20);
+            this.label109.TabIndex = 9;
+            this.label109.Text = " ";
+            // 
+            // btnSuppCmdRevue
+            // 
+            this.btnSuppCmdRevue.Location = new System.Drawing.Point(725, 180);
+            this.btnSuppCmdRevue.Name = "btnSuppCmdRevue";
+            this.btnSuppCmdRevue.Size = new System.Drawing.Size(540, 50);
+            this.btnSuppCmdRevue.TabIndex = 6;
+            this.btnSuppCmdRevue.Text = "Supprimer la commande";
+            this.btnSuppCmdRevue.UseVisualStyleBackColor = true;
+            this.btnSuppCmdRevue.Click += new System.EventHandler(this.btnSuppCmdRevue_Click);
+            // 
+            // dataGridViewCmdRevue
+            // 
+            this.dataGridViewCmdRevue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewCmdRevue.Location = new System.Drawing.Point(15, 374);
+            this.dataGridViewCmdRevue.Name = "dataGridViewCmdRevue";
+            this.dataGridViewCmdRevue.RowHeadersWidth = 62;
+            this.dataGridViewCmdRevue.RowTemplate.Height = 28;
+            this.dataGridViewCmdRevue.Size = new System.Drawing.Size(1287, 241);
+            this.dataGridViewCmdRevue.TabIndex = 10;
+            // 
+            // groupBoxInfosCmdRevue
+            // 
+            this.groupBoxInfosCmdRevue.Controls.Add(this.txbTitreCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.txbChemImageCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.txbDelaiMiseADispoCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.label79);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.label99);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.pictureBoxImgCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.txbRayonCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.txbPublicCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.txbGenreCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.txbPeriodiciteCmdRevue);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.label100);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.label101);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.label102);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.label103);
+            this.groupBoxInfosCmdRevue.Controls.Add(this.label104);
+            this.groupBoxInfosCmdRevue.Location = new System.Drawing.Point(15, 62);
+            this.groupBoxInfosCmdRevue.Name = "groupBoxInfosCmdRevue";
+            this.groupBoxInfosCmdRevue.Size = new System.Drawing.Size(1287, 294);
+            this.groupBoxInfosCmdRevue.TabIndex = 9;
+            this.groupBoxInfosCmdRevue.TabStop = false;
+            this.groupBoxInfosCmdRevue.Text = "Informations détaillées : ";
+            // 
+            // txbTitreCmdRevue
+            // 
+            this.txbTitreCmdRevue.Location = new System.Drawing.Point(182, 27);
+            this.txbTitreCmdRevue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txbTitreCmdRevue.Name = "txbTitreCmdRevue";
+            this.txbTitreCmdRevue.ReadOnly = true;
+            this.txbTitreCmdRevue.Size = new System.Drawing.Size(222, 26);
+            this.txbTitreCmdRevue.TabIndex = 30;
+            // 
+            // txbChemImageCmdRevue
+            // 
+            this.txbChemImageCmdRevue.Location = new System.Drawing.Point(576, 195);
+            this.txbChemImageCmdRevue.Name = "txbChemImageCmdRevue";
+            this.txbChemImageCmdRevue.ReadOnly = true;
+            this.txbChemImageCmdRevue.Size = new System.Drawing.Size(292, 26);
+            this.txbChemImageCmdRevue.TabIndex = 29;
+            // 
+            // txbDelaiMiseADispoCmdRevue
+            // 
+            this.txbDelaiMiseADispoCmdRevue.Location = new System.Drawing.Point(576, 24);
+            this.txbDelaiMiseADispoCmdRevue.Name = "txbDelaiMiseADispoCmdRevue";
+            this.txbDelaiMiseADispoCmdRevue.ReadOnly = true;
+            this.txbDelaiMiseADispoCmdRevue.Size = new System.Drawing.Size(292, 26);
+            this.txbDelaiMiseADispoCmdRevue.TabIndex = 27;
+            // 
+            // label79
+            // 
+            this.label79.AutoSize = true;
+            this.label79.Location = new System.Drawing.Point(416, 189);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(146, 20);
+            this.label79.TabIndex = 25;
+            this.label79.Text = "Chemin de l\'image :";
+            // 
+            // label99
+            // 
+            this.label99.AutoSize = true;
+            this.label99.Location = new System.Drawing.Point(416, 30);
+            this.label99.Name = "label99";
+            this.label99.Size = new System.Drawing.Size(145, 20);
+            this.label99.TabIndex = 23;
+            this.label99.Text = "Délai mise à dispo :";
+            // 
+            // pictureBoxImgCmdRevue
+            // 
+            this.pictureBoxImgCmdRevue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxImgCmdRevue.Location = new System.Drawing.Point(887, 20);
+            this.pictureBoxImgCmdRevue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBoxImgCmdRevue.Name = "pictureBoxImgCmdRevue";
+            this.pictureBoxImgCmdRevue.Size = new System.Drawing.Size(378, 261);
+            this.pictureBoxImgCmdRevue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxImgCmdRevue.TabIndex = 22;
+            this.pictureBoxImgCmdRevue.TabStop = false;
+            // 
+            // txbRayonCmdRevue
+            // 
+            this.txbRayonCmdRevue.Location = new System.Drawing.Point(182, 189);
+            this.txbRayonCmdRevue.Name = "txbRayonCmdRevue";
+            this.txbRayonCmdRevue.ReadOnly = true;
+            this.txbRayonCmdRevue.Size = new System.Drawing.Size(222, 26);
+            this.txbRayonCmdRevue.TabIndex = 10;
+            // 
+            // txbPublicCmdRevue
+            // 
+            this.txbPublicCmdRevue.Location = new System.Drawing.Point(182, 149);
+            this.txbPublicCmdRevue.Name = "txbPublicCmdRevue";
+            this.txbPublicCmdRevue.ReadOnly = true;
+            this.txbPublicCmdRevue.Size = new System.Drawing.Size(222, 26);
+            this.txbPublicCmdRevue.TabIndex = 9;
+            // 
+            // txbGenreCmdRevue
+            // 
+            this.txbGenreCmdRevue.Location = new System.Drawing.Point(182, 113);
+            this.txbGenreCmdRevue.Name = "txbGenreCmdRevue";
+            this.txbGenreCmdRevue.ReadOnly = true;
+            this.txbGenreCmdRevue.Size = new System.Drawing.Size(222, 26);
+            this.txbGenreCmdRevue.TabIndex = 8;
+            // 
+            // txbPeriodiciteCmdRevue
+            // 
+            this.txbPeriodiciteCmdRevue.Location = new System.Drawing.Point(182, 71);
+            this.txbPeriodiciteCmdRevue.Name = "txbPeriodiciteCmdRevue";
+            this.txbPeriodiciteCmdRevue.ReadOnly = true;
+            this.txbPeriodiciteCmdRevue.Size = new System.Drawing.Size(222, 26);
+            this.txbPeriodiciteCmdRevue.TabIndex = 7;
+            // 
+            // label100
+            // 
+            this.label100.AutoSize = true;
+            this.label100.Location = new System.Drawing.Point(6, 195);
+            this.label100.Name = "label100";
+            this.label100.Size = new System.Drawing.Size(63, 20);
+            this.label100.TabIndex = 5;
+            this.label100.Text = "Rayon :";
+            // 
+            // label101
+            // 
+            this.label101.AutoSize = true;
+            this.label101.Location = new System.Drawing.Point(6, 155);
+            this.label101.Name = "label101";
+            this.label101.Size = new System.Drawing.Size(59, 20);
+            this.label101.TabIndex = 4;
+            this.label101.Text = "Public :";
+            // 
+            // label102
+            // 
+            this.label102.AutoSize = true;
+            this.label102.Location = new System.Drawing.Point(6, 119);
+            this.label102.Name = "label102";
+            this.label102.Size = new System.Drawing.Size(62, 20);
+            this.label102.TabIndex = 3;
+            this.label102.Text = "Genre :";
+            // 
+            // label103
+            // 
+            this.label103.AutoSize = true;
+            this.label103.Location = new System.Drawing.Point(6, 77);
+            this.label103.Name = "label103";
+            this.label103.Size = new System.Drawing.Size(94, 20);
+            this.label103.TabIndex = 2;
+            this.label103.Text = "Périodicité ::";
+            this.label103.Click += new System.EventHandler(this.label103_Click);
+            // 
+            // label104
+            // 
+            this.label104.AutoSize = true;
+            this.label104.Location = new System.Drawing.Point(6, 36);
+            this.label104.Name = "label104";
+            this.label104.Size = new System.Drawing.Size(48, 20);
+            this.label104.TabIndex = 1;
+            this.label104.Text = "Titre :";
+            // 
+            // btnRechercheNumDocCmdRevue
+            // 
+            this.btnRechercheNumDocCmdRevue.Location = new System.Drawing.Point(883, 11);
+            this.btnRechercheNumDocCmdRevue.Name = "btnRechercheNumDocCmdRevue";
+            this.btnRechercheNumDocCmdRevue.Size = new System.Drawing.Size(397, 33);
+            this.btnRechercheNumDocCmdRevue.TabIndex = 8;
+            this.btnRechercheNumDocCmdRevue.Text = "Rechercher";
+            this.btnRechercheNumDocCmdRevue.UseVisualStyleBackColor = true;
+            this.btnRechercheNumDocCmdRevue.Click += new System.EventHandler(this.btnRechercheNumDocCmdRevue_Click);
+            // 
+            // textBoxNumDocCmdRevue
+            // 
+            this.textBoxNumDocCmdRevue.Location = new System.Drawing.Point(341, 14);
+            this.textBoxNumDocCmdRevue.Name = "textBoxNumDocCmdRevue";
+            this.textBoxNumDocCmdRevue.Size = new System.Drawing.Size(397, 26);
+            this.textBoxNumDocCmdRevue.TabIndex = 7;
+            // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.Location = new System.Drawing.Point(53, 14);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(170, 20);
+            this.label78.TabIndex = 1;
+            this.label78.Text = "Numéro du document :";
+            this.label78.Click += new System.EventHandler(this.label78_Click);
             // 
             // FrmMediatek
             // 
@@ -3263,6 +3612,14 @@ namespace MediaTekDocuments.view
             this.grpboxInfosDvdCmd.ResumeLayout(false);
             this.grpboxInfosDvdCmd.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictBoxImageCmdDvd)).EndInit();
+            this.tabCommandeRevue.ResumeLayout(false);
+            this.tabCommandeRevue.PerformLayout();
+            this.groupBoxInfosNewCmdRevue.ResumeLayout(false);
+            this.groupBoxInfosNewCmdRevue.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdRevue)).EndInit();
+            this.groupBoxInfosCmdRevue.ResumeLayout(false);
+            this.groupBoxInfosCmdRevue.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImgCmdRevue)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -3528,6 +3885,38 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.TextBox txbNbDocRechercheCmdDvd;
         private System.Windows.Forms.Label label84;
         private System.Windows.Forms.TextBox txbSynopsisCmdDvd;
+        private System.Windows.Forms.TextBox textBoxNumDocCmdRevue;
+        private System.Windows.Forms.Label label78;
+        private System.Windows.Forms.GroupBox groupBoxInfosNewCmdRevue;
+        private System.Windows.Forms.DateTimePicker dateTimePickerCmdRevue;
+        private System.Windows.Forms.Label label105;
+        private System.Windows.Forms.Label label106;
+        private System.Windows.Forms.Label label107;
+        private System.Windows.Forms.Label label108;
+        private System.Windows.Forms.TextBox txbMontantCmdRevue;
+        private System.Windows.Forms.TextBox txbNumCmdRevue;
+        private System.Windows.Forms.Label label109;
+        private System.Windows.Forms.Button btnAjoutCmdRevue;
+        private System.Windows.Forms.Button btnSuppCmdRevue;
+        private System.Windows.Forms.DataGridView dataGridViewCmdRevue;
+        private System.Windows.Forms.GroupBox groupBoxInfosCmdRevue;
+        private System.Windows.Forms.TextBox txbChemImageCmdRevue;
+        private System.Windows.Forms.TextBox txbDelaiMiseADispoCmdRevue;
+        private System.Windows.Forms.Label label79;
+        private System.Windows.Forms.Label label99;
+        private System.Windows.Forms.PictureBox pictureBoxImgCmdRevue;
+        private System.Windows.Forms.TextBox txbRayonCmdRevue;
+        private System.Windows.Forms.TextBox txbPublicCmdRevue;
+        private System.Windows.Forms.TextBox txbGenreCmdRevue;
+        private System.Windows.Forms.TextBox txbPeriodiciteCmdRevue;
+        private System.Windows.Forms.Label label100;
+        private System.Windows.Forms.Label label101;
+        private System.Windows.Forms.Label label102;
+        private System.Windows.Forms.Label label103;
+        private System.Windows.Forms.Label label104;
+        private System.Windows.Forms.Button btnRechercheNumDocCmdRevue;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFinDAbonnementRevue;
+        private System.Windows.Forms.TextBox txbTitreCmdRevue;
     }
 }
 

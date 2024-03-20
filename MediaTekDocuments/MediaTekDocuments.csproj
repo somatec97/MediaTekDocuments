@@ -142,9 +142,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>mediatek86DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="model\Abonnement.cs" />
     <Compile Include="model\Commande.cs" />
     <Compile Include="model\CommandeDocument.cs" />
     <Compile Include="model\Suivi.cs" />
+    <Compile Include="view\FrmAlertFinAbonnement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\FrmAlertFinAbonnement.Designer.cs">
+      <DependentUpon>FrmAlertFinAbonnement.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\FrmMediatek.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +180,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="view\FrmAlertFinAbonnement.resx">
+      <DependentUpon>FrmAlertFinAbonnement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="view\FrmMediatek.resx">
       <DependentUpon>FrmMediatek.cs</DependentUpon>
     </EmbeddedResource>
