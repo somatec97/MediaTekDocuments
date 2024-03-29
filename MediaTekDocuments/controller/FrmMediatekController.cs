@@ -105,6 +105,7 @@ namespace MediaTekDocuments.controller
         {
             return access.GetExemplairesRevue(idDocuement);
         }
+       
         /// <summary>
         /// récupère les abonnements d'une revue
         /// </summary>
@@ -120,10 +121,31 @@ namespace MediaTekDocuments.controller
         /// </summary>
         /// <param name="exemplaire">L'objet Exemplaire concerné</param>
         /// <returns>True si la création a pu se faire</returns>
-        public bool CreerExemplaire(Exemplaire exemplaire)
+        public bool CreerExemplaireRevue(string id, int numero, DateTime dateachat, string photo, string idEtat)
         {
-            return access.CreerExemplaire(exemplaire);
+            return access.CreerExemplaireRevue(id, numero, dateachat, photo, idEtat);
         }
+        
+        /// <summary>
+        /// modifier l'etat d'un exemplaire d'un document dans la bdd
+        /// </summary>
+        /// <param name="exemplaire"></param>
+        /// <returns></returns>
+        public bool EditeEtatExemplaireDocument(Exemplaire exemplaire)
+        {
+            return access.EditeEtatExemplaireDocument(exemplaire);
+        }
+        /// <summary>
+        /// Supprimer un exemplaire d'un document dans la bdd
+        /// </summary>
+        /// <param name="exemplaire"></param>
+        /// <returns></returns>
+        public bool DeleteExemplaireDocument(Exemplaire exemplaire)
+        {
+            return access.DeleteExemplaireDocument(exemplaire);
+        }
+
+       
         /// <summary>
         /// recuperer un exemplaire d'un document dans la bdd
         /// </summary>
@@ -149,6 +171,14 @@ namespace MediaTekDocuments.controller
         public List<Abonnement> GetAbonnementsExpires()
         {
             return access.GetAbonnementExpire();
+        }
+        /// <summary>
+        /// recupere les etats
+        /// </summary>
+        /// <returns></returns>
+        public List<Etat> GetAllEtats()
+        {
+            return access.GetAllEtats();
         }
         /// <summary>
         /// creer un document dans la bdd

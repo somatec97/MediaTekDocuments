@@ -157,6 +157,16 @@ namespace MediaTekDocuments.dal
             List<Suivi> LesSuivis = TraitementRecup<Suivi>(GET, "suivi" );
             return LesSuivis;
         }
+        /// <summary>
+        /// Retourne tous les etats d'un document
+        /// </summary>
+        /// <returns></returns>
+        public List<Etat> GetAllEtats()
+        {
+
+            List<Etat> LesEtats = TraitementRecup<Etat>(GET, "etat");
+            return LesEtats;
+        }
 
 
         /// <summary>
@@ -170,6 +180,8 @@ namespace MediaTekDocuments.dal
             List<Exemplaire> lesExemplaires = TraitementRecup<Exemplaire>(GET, "exemplaire/" + jsonIdDocument);
             return lesExemplaires;
         }
+       
+       
         /// <summary>
         /// Retourne les abonnements d'une revue
         /// </summary>
@@ -214,7 +226,7 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
-        /// ecriture d'un exemplaire en base de données
+        /// Ecriture d'un exemplaire en base de données
         /// </summary>
         /// <param name="exemplaire">exemplaire à insérer</param>
         /// <returns>true si l'insertion a pu se faire (retour != null)</returns>
@@ -231,6 +243,76 @@ namespace MediaTekDocuments.dal
                 Console.WriteLine(ex.Message);
             }
             return false; 
+        }
+        /// <summary>
+        /// Ecriture d'un exemplaire d'une revue en base de données
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="numero"></param>
+        /// <param name="dateAchat"></param>
+        /// <param name="photo"></param>
+        /// <param name="idEtat"></param>
+        /// <returns>true si l'insertion a pu se faire</returns>
+        public bool CreerExemplaireRevue(string id, int numero, DateTime dateAchat, string photo, string idEtat)
+        {
+            String jsonDateAchat = JsonConvert.SerializeObject(dateAchat, new CustomDateTimeConverter());
+            String jsonCreerExemplaireRevue = "{ \"id\" : \"" + id + "\", \"numero\" : \"" + numero + "\", \"dateAchat\" : \"" + jsonDateAchat + "\", \"photo\" : \"" + photo + "\", \"idEtat\" :\"" + idEtat+ "\"}";
+            Console.WriteLine("jsonCreerExemplaireRevue" + jsonCreerExemplaireRevue);
+            try
+            {
+                //récupération doit d'une liste vide (requête ok) soit de null (erreur)
+                List<Abonnement> liste = TraitementRecup<Abonnement>(POST, "exemplaire/" + jsonCreerExemplaireRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+
+        }
+        /// <summary>
+        /// modification de l'état d'un exemplaire en bdd
+        /// </summary>
+        /// <param name="exemplaire"></param>
+        /// <returns>true si la modification a pu se faire</returns>
+        public bool EditeEtatExemplaireDocument(Exemplaire exemplaire)
+        {
+            String jsonEditeEtatExemplaireDocument = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
+            Console.WriteLine("jsonEditeEtatExemplaireDocument" + jsonEditeEtatExemplaireDocument);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Exemplaire> liste = TraitementRecup<Exemplaire>(PUT, "exemplairesdocument/" + exemplaire.Numero + "/"+ jsonEditeEtatExemplaireDocument);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+        /// <summary>
+        /// suppression d'un exemplaire d'un document en bdd
+        /// </summary>
+        /// <param name="exemplaire"></param>
+        /// <returns>true si la suppression a pu se faire</returns>
+        public bool DeleteExemplaireDocument(Exemplaire exemplaire)
+        {
+            string jsonDeleteExemplaireDocument = "{\"id\" : \"" + exemplaire.Id + "\",\"numero\":\""+exemplaire.Numero+ "\"}";
+            Console.WriteLine("jsonDeleteExemplaireDocument" + jsonDeleteExemplaireDocument);
+            try
+            {
+                //récupération doit d'une liste vide (requête ok) soit de null (erreur)
+                List<Exemplaire> liste = TraitementRecup<Exemplaire>(DELETE, "exemplaire/"  + jsonDeleteExemplaireDocument);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+
         }
         /// <summary>
         /// ecrire un document en bdd
