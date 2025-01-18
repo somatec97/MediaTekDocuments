@@ -90,9 +90,26 @@ namespace MediaTekDocuments.controller
         /// getter sur les suivis
         /// </summary>
         /// <returns>liste d'objet suivi</returns>
+        //public List<Suivi> GetAllSuivis()
+        //{
+        //    return access.GetAllSuivis();
+        //}
         public List<Suivi> GetAllSuivis()
         {
-            return access.GetAllSuivis();
+            List<Suivi> lesSuivis = access.GetAllSuivis();
+            Console.WriteLine("Les Suivis récupérés:");
+            if (lesSuivis != null)
+            {
+                foreach (var suivi in lesSuivis)
+                {
+                    Console.WriteLine($"Id: {suivi.Id}, Stade: {suivi.Stade}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Les Suivis sont null");
+            }
+            return lesSuivis;
         }
 
 

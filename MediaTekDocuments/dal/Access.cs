@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
+using System.Net.Http;
+using System.Text;
+using System.Linq;
 
 namespace MediaTekDocuments.dal
 {
@@ -151,12 +154,61 @@ namespace MediaTekDocuments.dal
         /// Retourne touts les suivis a partir de la bdd
         /// </summary>
         /// <returns>liste d'objet suivi</returns>
+        //public List<Suivi> GetAllSuivis()
+        //{
+
+        //    List<Suivi> LesSuivis = TraitementRecup<Suivi>(GET, "suivi" );
+        //    return LesSuivis;
+        //}
         public List<Suivi> GetAllSuivis()
         {
-           
-            List<Suivi> LesSuivis = TraitementRecup<Suivi>(GET, "suivi" );
-            return LesSuivis;
+            string url = "http://localhost/rest_mediatekdocuments/mediatekDocument.php?table=suivi";
+            using (HttpClient client = new HttpClient())
+            {
+                var byteArray = new UTF8Encoding().GetBytes("admin:adminpwd");
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                HttpResponseMessage response = client.GetAsync(url).Result;
+                string responseContent = response.Content.ReadAsStringAsync().Result;
+
+                Console.WriteLine("Réponse brute de l'API : " + responseContent);
+
+                
+                var jsonResponses = responseContent.Split(new[] { "}{", "}\n{" }, StringSplitOptions.RemoveEmptyEntries)
+                                                   .Select(str => str.StartsWith("{") ? str : "{" + str)
+                                                   .Select(str => str.EndsWith("}") ? str : str + "}").ToArray();
+
+                foreach (var jsonResponseText in jsonResponses)
+                {
+                    try
+                    {
+                        var jsonResponse = JObject.Parse(jsonResponseText);
+
+                        if (jsonResponse["code"].ToString() == "200")
+                        {
+                            var items = jsonResponse["result"].ToObject<List<Suivi>>();
+                            Console.WriteLine("Suivis récupérés de l'API:");
+                            foreach (var item in items)
+                            {
+                                Console.WriteLine($"Id: {item.Id}, Stade: {item.Stade}");
+                            }
+                            return items;  // Retourner les éléments trouvés
+                        }
+                        else
+                        {
+                            Console.WriteLine("Erreur: Données non trouvées.");
+                        }
+                    }
+                    catch (JsonReaderException ex)
+                    {
+                        Console.WriteLine("Erreur de parsing JSON : " + ex.Message);
+                    }
+                }
+
+                return new List<Suivi>();
+            }
         }
+
         /// <summary>
         /// Retourne tous les etats d'un document
         /// </summary>
@@ -224,6 +276,22 @@ namespace MediaTekDocuments.dal
             List<CommandeDocument> lesCommandesDocuments = TraitementRecup<CommandeDocument>(GET, "commandeDocument/" + jsonIdDocument);
             return lesCommandesDocuments;
         }
+        /// <summary>
+        /// retourne un utilisateur selon son login 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        public Utilisateur GetUtilisateur(string login)
+        {
+            List<Utilisateur> lesUtilisateurs = TraitementRecup<Utilisateur>(GET, "utilisateur/" + login );
+            if(lesUtilisateurs != null && lesUtilisateurs.Count > 0)
+            {
+                return lesUtilisateurs[0];
+            }
+            return null;
+
+        }
+
 
         /// <summary>
         /// Ecriture d'un exemplaire en base de données
@@ -639,25 +707,29 @@ namespace MediaTekDocuments.dal
         /// <param name="IdLivreDvd"></param>
         /// <param name="IdSuivi"></param>
         /// <returns>true si l'insertion a pu se faire</returns>
-        public bool CreerCommandeDocument(string Id, int NbExemplaire, string IdLivreDvd, string IdSuivi )
+        public bool CreerCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
         {
-
-            String jsonCreerCommandeDocument = "{ \"id\" : \"" + Id + "\", \"nbExemplaire\" : \"" + NbExemplaire + "\", \"idLivreDvd\" : \"" + IdLivreDvd + "\", \"idSuivi\" : \"" + IdSuivi +  "\"}";
-            Console.WriteLine("jsonCreerCommandeDocument" + jsonCreerCommandeDocument);
-
+            var commandeDocument = new
+            {
+                id,
+                nbExemplaire,
+                idLivreDvd,
+                idSuivi
+            };
+            String jsonCreerCommandeDocument = JsonConvert.SerializeObject(commandeDocument);
+            Console.WriteLine("Données envoyées pour la commande de document : " + jsonCreerCommandeDocument); // Ajout de journalisation
             try
             {
-                //récupération doit d'une liste vide (requête ok) soit de null (erreur)
-                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(POST, "commandeDocument/" + jsonCreerCommandeDocument);
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(POST, jsonCreerCommandeDocument);
                 return (liste != null);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-
+                Console.WriteLine("Erreur lors de la création de la commande de document : " + ex.Message);
             }
             return false;
         }
+
         /// <summary>
         /// modifier l'étape de suivi d'une commande de document en bdd
         /// </summary>
@@ -666,25 +738,43 @@ namespace MediaTekDocuments.dal
         /// <param name="IdLivreDvd"></param>
         /// <param name="IdSuivi"></param>
         /// <returns>true si la modification a pu se faire</returns>
-        public bool EditSuiviCommandeDocument(string Id, int NbExemplaire, string IdLivreDvd, string IdSuivi)
+        //public bool EditSuiviCommandeDocument(string Id, int NbExemplaire, string IdLivreDvd, string IdSuivi)
+        //{
+        //    String jsonEditSuiviCommandeDocument = "{ \"id\" : \"" + Id + "\", \"nbExemplaire\" : \"" + NbExemplaire + "\", \"idLivreDvd\" : \"" + IdLivreDvd + "\", \"idSuivi\" : \"" + IdSuivi + "\"}";
+        //    Console.WriteLine("jsonEditSuiviCommandeDocument" + jsonEditSuiviCommandeDocument);
+
+        //    try
+        //    {
+        //        //récupération doit d'une liste vide (requête ok) soit de null (erreur)
+        //        List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(PUT, "commandeDocument/" + Id + "/" + jsonEditSuiviCommandeDocument);
+        //        return (liste != null);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+
+        //    }
+        //    return false;
+
+        //}
+        public bool EditSuiviCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
         {
-            String jsonEditSuiviCommandeDocument = "{ \"id\" : \"" + Id + "\", \"nbExemplaire\" : \"" + NbExemplaire + "\", \"idLivreDvd\" : \"" + IdLivreDvd + "\", \"idSuivi\" : \"" + IdSuivi + "\"}";
-            Console.WriteLine("jsonEditSuiviCommandeDocument" + jsonEditSuiviCommandeDocument);
+            String jsonEditSuiviCommandeDocument = "{ \"id\" : \"" + id + "\", \"nbExemplaire\" : " + nbExemplaire + ", \"idLivreDvd\" : \"" + idLivreDvd + "\", \"idSuivi\" : \"" + idSuivi + "\"}";
+            Console.WriteLine("jsonEditSuiviCommandeDocument: " + jsonEditSuiviCommandeDocument);
 
             try
             {
-                //récupération doit d'une liste vide (requête ok) soit de null (erreur)
-                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(PUT, "commandeDocument/" + Id + "/" + jsonEditSuiviCommandeDocument);
+                // Récupération doit d'une liste vide (requête ok) soit de null (erreur)
+                List<CommandeDocument> liste = TraitementRecup<CommandeDocument>("PUT", "commandeDocument/" + id + "/" + jsonEditSuiviCommandeDocument);
                 return (liste != null);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-
             }
             return false;
-
         }
+
         /// <summary>
         /// supprimer une commande de document en bdd
         /// </summary>
@@ -763,7 +853,37 @@ namespace MediaTekDocuments.dal
         /// <param name="methode">verbe HTTP (GET, POST, PUT, DELETE)</param>
         /// <param name="message">information envoyée</param>
         /// <returns>liste d'objets récupérés (ou liste vide)</returns>
-        private List<T> TraitementRecup<T> (String methode, String message)
+        //private List<T> TraitementRecup<T>(String methode, String message)
+        //{
+        //    List<T> liste = new List<T>();
+        //    try
+        //    {
+        //        JObject retour = api.RecupDistant(methode, message);
+        //        // extraction du code retourné
+        //        String code = (String)retour["code"];
+        //        if (code.Equals("200"))
+        //        {
+        //            // dans le cas du GET (select), récupération de la liste d'objets
+        //            if (methode.Equals(GET))
+        //            {
+        //                String resultString = JsonConvert.SerializeObject(retour["result"]);
+        //                // construction de la liste d'objets à partir du retour de l'api
+        //                liste = JsonConvert.DeserializeObject<List<T>>(resultString, new CustomBooleanJsonConverter());
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine("Erreur lors de l'accès à l'API : " + e.Message);
+        //        Environment.Exit(0);
+        //    }
+        //    return liste;
+        //}
+        private List<T> TraitementRecup<T>(String methode, String message)
         {
             List<T> liste = new List<T>();
             try
@@ -783,15 +903,19 @@ namespace MediaTekDocuments.dal
                 }
                 else
                 {
-                    Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
+                    Console.WriteLine("code erreur = " + code + ", message = " + (String)retour["message"]);
+                    //Log.Error("Access.TraitementRecup catch code={0} erreur={1} ", code);
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de l'accès à l'API : "+e.Message);
+                //Log.Error("Access.TraitementRecup catch liste={0} erreur={1}", liste, e.Message);
                 Environment.Exit(0);
             }
             return liste;
         }
+
+
 
         /// <summary>
         /// Convertit en json un couple nom/valeur

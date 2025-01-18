@@ -20,8 +20,23 @@ namespace MediaTekDocuments.view
         {
             InitializeComponent();
             lesAbonnementsExpires = controller.GetAbonnementsExpires();
+            if (lesAbonnementsExpires == null || !lesAbonnementsExpires.Any())
+            {
+                Console.WriteLine("Aucun abonnement expiré trouvé");
+            }
+            else
+            {
+                Console.WriteLine($"{lesAbonnementsExpires.Count} abonnements expirés trouvés");
+            }
             RemplirAbonnementsExpires(lesAbonnementsExpires);
         }
+
+        //public FrmAlertFinAbonnement(FrmMediatekController controller)
+        //{
+        //    InitializeComponent();
+        //    lesAbonnementsExpires = controller.GetAbonnementsExpires();
+        //    RemplirAbonnementsExpires(lesAbonnementsExpires);
+        //}
         /// <summary>
         /// Remplissage de la grille des abonnements qui expirent dans 30 jours
         /// </summary>

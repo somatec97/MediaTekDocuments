@@ -474,12 +474,14 @@ namespace MediaTekDocuments.view
             // 
             // cbxEtatExmpLivre
             // 
+            this.cbxEtatExmpLivre.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbxEtatExmpLivre.FormattingEnabled = true;
             this.cbxEtatExmpLivre.Location = new System.Drawing.Point(452, 105);
             this.cbxEtatExmpLivre.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbxEtatExmpLivre.Name = "cbxEtatExmpLivre";
             this.cbxEtatExmpLivre.Size = new System.Drawing.Size(245, 28);
             this.cbxEtatExmpLivre.TabIndex = 39;
+            this.cbxEtatExmpLivre.SelectedIndexChanged += new System.EventHandler(this.cbxEtatExmpLivre_SelectedIndexChanged);
             // 
             // txbNumExempLivre
             // 
@@ -2899,6 +2901,7 @@ namespace MediaTekDocuments.view
             this.txbNbCommandeLivreRecherche.Name = "txbNbCommandeLivreRecherche";
             this.txbNbCommandeLivreRecherche.Size = new System.Drawing.Size(397, 26);
             this.txbNbCommandeLivreRecherche.TabIndex = 5;
+            this.txbNbCommandeLivreRecherche.TextChanged += new System.EventHandler(this.txbNbCommandeLivreRecherche_TextChanged);
             // 
             // btnRechercheCmdLivre
             // 
@@ -3007,6 +3010,7 @@ namespace MediaTekDocuments.view
             this.cbxEtapSuiviCmdLivre.Name = "cbxEtapSuiviCmdLivre";
             this.cbxEtapSuiviCmdLivre.Size = new System.Drawing.Size(394, 28);
             this.cbxEtapSuiviCmdLivre.TabIndex = 12;
+           // this.cbxEtapSuiviCmdLivre.SelectedIndexChanged += new System.EventHandler(this.cbxEtapSuiviCmdLivre_SelectedIndexChanged_1);
             // 
             // btnRetourCmdLivre
             // 
